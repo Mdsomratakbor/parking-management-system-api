@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{41B9EDF4-C0AC-4D49-AF87-D65B8251E3DF}|api\\api.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{41B9EDF4-C0AC-4D49-AF87-D65B8251E3DF}|api\\api.csproj|solutionrelative:api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41B9EDF4-C0AC-4D49-AF87-D65B8251E3DF}|api\\api.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41B9EDF4-C0AC-4D49-AF87-D65B8251E3DF}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\infrastructure\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|solutionrelative:infrastructure\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\infrastructure\\contracts\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|solutionrelative:infrastructure\\contracts\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\infrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0AA3EF-F240-4F60-A7C9-0AA7F9B97266}|infrastructure\\infrastructure.csproj|solutionrelative:infrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\domain\\entities\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|solutionrelative:domain\\entities\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\domain\\entities\\parkingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|solutionrelative:domain\\entities\\parkingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|e:\\my project\\dataadvanceinterviewtask\\backend\\parking-management-system\\domain\\domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BEC24AED-AACB-4428-A27A-DABCA1F3593C}|domain\\domain.csproj|solutionrelative:domain\\domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "api",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\api\\api.csproj",
+              "RelativeDocumentMoniker": "api\\api.csproj",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\api\\api.csproj",
+              "RelativeToolTip": "api\\api.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-14T12:51:20.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\api\\Program.cs",
+              "RelativeDocumentMoniker": "api\\Program.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\api\\Program.cs",
+              "RelativeToolTip": "api\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:50:19.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ParkingRecord.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\entities\\ParkingRecord.cs",
+              "RelativeDocumentMoniker": "domain\\entities\\ParkingRecord.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\entities\\ParkingRecord.cs",
+              "RelativeToolTip": "domain\\entities\\ParkingRecord.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:33:30.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Vehicle.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\entities\\Vehicle.cs",
+              "RelativeDocumentMoniker": "domain\\entities\\Vehicle.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\entities\\Vehicle.cs",
+              "RelativeToolTip": "domain\\entities\\Vehicle.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAwwDEAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:17:25.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\contracts\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "infrastructure\\contracts\\IUnitOfWork.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\contracts\\IUnitOfWork.cs",
+              "RelativeToolTip": "infrastructure\\contracts\\IUnitOfWork.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAkAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:12:33.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DataContext.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\DataContext.cs",
+              "RelativeDocumentMoniker": "infrastructure\\DataContext.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\DataContext.cs",
+              "RelativeToolTip": "infrastructure\\DataContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:12:11.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "infrastructure\\UnitOfWork.cs",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\infrastructure\\UnitOfWork.cs",
+              "RelativeToolTip": "infrastructure\\UnitOfWork.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T12:11:57.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "domain",
+              "DocumentMoniker": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\domain.csproj",
+              "RelativeDocumentMoniker": "domain\\domain.csproj",
+              "ToolTip": "E:\\My Project\\DataAdvanceInterviewTask\\backend\\parking-management-system\\domain\\domain.csproj",
+              "RelativeToolTip": "domain\\domain.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-14T12:10:37.38Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
