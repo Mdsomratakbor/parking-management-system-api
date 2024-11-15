@@ -1,4 +1,5 @@
-﻿using domain.entities;
+﻿using domain.dto;
+using domain.entities;
 using infrastructure.contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,17 +39,45 @@ namespace api.Controllers
 
         // Add a new vehicle
         [HttpPost]
-        public async Task<ActionResult<Vehicle>> AddVehicle([FromBody] Vehicle vehicle)
+        public async Task<ActionResult<Vehicle>> AddVehicle([FromBody] VehicleDto vehicleDto)
         {
-            if (vehicle == null)
+            if (vehicleDto == null)
             {
                 return BadRequest("Vehicle data is null");
             }
 
-            _unitOfWork.VehicleRepository.Add(vehicle);
-            await _unitOfWork.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.VehicleId }, vehicle);
+            var vehicle = new Vehicle
+            {
+                LicenseNumber = vehicleDto.LicenseNumber,
+                VehicleType = vehicleDto.VehicleType,
+                OwnerName = vehicleDto.OwnerName,
+                OwnerPhone = vehicleDto.OwnerPhone,
+                OwnerAddress = vehicleDto.OwnerAddress,
+                Status = vehicleDto.Status,
+                EntryTime = vehicleDto.EntryTime,
+                ParkingCharge = vehicleDto.ParkingCharge,
+                CreatedAt = DateTime.Now
+            };
+
+            try
+            {
+                // Add the vehicle to the repository
+                _unitOfWork.VehicleRepository.Add(vehicle);
+
+                // Save the changes to the database
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return 201 Created with the vehicle's data
+                return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.VehicleId }, vehicle);
+            }
+            catch (Exception ex)
+            {
+
+                // Return an Internal Server Error (500) if something goes wrong
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
+
 
         // Update a vehicle (only when vehicle exits)
         [HttpPut("{id}")]
@@ -97,8 +126,8 @@ namespace api.Controllers
         [HttpGet("charge/{vehicleId}")]
         public async Task<ActionResult<decimal>> GetParkingCharge(int vehicleId)
         {
-            var charge = await _unitOfWork.VehicleRepository.CalculateParkingChargeAsync(vehicleId);
-            return Ok(charge);
+            //var charge = await _unitOfWork.VehicleRepository.CalculateParkingChargeAsync(vehicleId);
+            return Ok();
         }
     }
 }

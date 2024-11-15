@@ -19,8 +19,7 @@ namespace domain.entities
         public string LicenseNumber { get; set; }
 
         [Required]
-        [MaxLength(20)]
-        public VehicleType VehicleType { get; set; }
+        public string VehicleType { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -34,8 +33,7 @@ namespace domain.entities
         public string OwnerAddress { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public Status Status { get; set; } // "in" or "out"
+        public string Status { get; set; } // "in" or "out"
 
         [Required]
         public DateTime EntryTime { get; set; }
@@ -46,7 +44,5 @@ namespace domain.entities
         public decimal ParkingCharge { get; set; }
 
         public int? Duration { get; set; }
-
-        public ICollection<ParkingRecord> ParkingRecords { get; set; }
     }
 }

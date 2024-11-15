@@ -1,0 +1,12 @@
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\bin\Debug\net8.0\utilities.deps.json
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\bin\Debug\net8.0\utilities.dll
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\bin\Debug\net8.0\utilities.pdb
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.GeneratedMSBuildEditorConfig.editorconfig
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.AssemblyInfoInputs.cache
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.AssemblyInfo.cs
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.csproj.CoreCompileInputs.cache
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.sourcelink.json
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.dll
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\refint\utilities.dll
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\utilities.pdb
+E:\My Project\DataAdvanceInterviewTask\backend\parking-management-system\utilities\obj\Debug\net8.0\ref\utilities.dll

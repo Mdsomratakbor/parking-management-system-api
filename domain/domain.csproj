@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="dto\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\utilities\utilities.csproj" />
   </ItemGroup>
 

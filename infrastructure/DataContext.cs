@@ -14,14 +14,9 @@ namespace infrastructure
         {
         }
         public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<ParkingRecord> ParkingRecords { get; set; }
+        public DbSet<ParkingSummary> ParkingSummaries { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ParkingRecord>()
-                .HasOne(pr => pr.Vehicle)
-                .WithMany(v => v.ParkingRecords)
-                .HasForeignKey(pr => pr.VehicleId) 
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Vehicle>()
                 .HasIndex(v => v.LicenseNumber)

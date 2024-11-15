@@ -13,6 +13,6 @@ namespace infrastructure.contracts
     {
 
         Task<IEnumerable<Vehicle>> GetVehiclesByStatusAsync(string status);
-        Task<decimal> CalculateParkingChargeAsync(int vehicleId);
+       // Task<decimal> CalculateParkingChargeAsync(int vehicleId);
     }
 }
