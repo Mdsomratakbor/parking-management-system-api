@@ -3,6 +3,7 @@ using domain.entities;
 using infrastructure.contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -17,15 +18,29 @@ namespace api.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // Get all vehicles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles()
+        public async Task<ActionResult> GetAllVehicles(int pageNumber = 1, int pageSize = 10)
         {
-            var vehicles = _unitOfWork.VehicleRepository.GetAll();
-            return Ok(vehicles);
+            try
+            {
+                var result = await _unitOfWork.VehicleRepository.GetPagedVehiclesAsync(pageNumber, pageSize);
+
+                var response = new
+                {
+                    TotalRecords = result.TotalRecords,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    Vehicles = result.Vehicles
+                };
+
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // Get a vehicle by its ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
         {
@@ -37,7 +52,6 @@ namespace api.Controllers
             return Ok(vehicle);
         }
 
-        // Add a new vehicle
         [HttpPost]
         public async Task<ActionResult<Vehicle>> AddVehicle([FromBody] VehicleDto vehicleDto)
         {
@@ -61,45 +75,93 @@ namespace api.Controllers
 
             try
             {
-                // Add the vehicle to the repository
+                if (vehicle.Status == "in")
+                {
+                    var availableSlot = await _unitOfWork.ParkingSlotRepository
+                        .FirstOrDefaultAsync(slot => slot.IsOccupied == false);
+
+                    if (availableSlot != null)
+                    {
+                        vehicle.ParkingSlotId = availableSlot.ParkingSlotId;
+                        availableSlot.IsOccupied = true;
+                        availableSlot.OccupiedFrom = DateTime.Now;
+
+                        _unitOfWork.ParkingSlotRepository.Update(availableSlot);
+                    }
+                }
                 _unitOfWork.VehicleRepository.Add(vehicle);
 
-                // Save the changes to the database
                 await _unitOfWork.SaveChangesAsync();
 
-                // Return 201 Created with the vehicle's data
                 return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.VehicleId }, vehicle);
             }
             catch (Exception ex)
             {
-
-                // Return an Internal Server Error (500) if something goes wrong
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
 
-
-        // Update a vehicle (only when vehicle exits)
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] Vehicle vehicle)
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleUpdateDto vehicle)
         {
             if (id != vehicle.VehicleId)
             {
                 return BadRequest("Vehicle ID mismatch");
             }
 
-            var existingVehicle = await _unitOfWork.VehicleRepository.GetByIdAsync(id);
-            if (existingVehicle == null)
+            try
             {
-                return NotFound();
-            }
+                var existingVehicle = await _unitOfWork.VehicleRepository.GetByIdAsync(id);
+                if (existingVehicle == null)
+                {
+                    return NotFound();
+                }
+                if (existingVehicle.Status == "in" && vehicle.Status == "out")
+                {
+                    var parkingSlot = await _unitOfWork.ParkingSlotRepository
+                        .GetByIdAsync((int)existingVehicle.ParkingSlotId);
 
-            _unitOfWork.VehicleRepository.Update(vehicle);
-            await _unitOfWork.SaveChangesAsync();
-            return NoContent();
+                    if (parkingSlot != null)
+                    {
+                        parkingSlot.IsOccupied = false;
+                        parkingSlot.OccupiedUntil = DateTime.Now;
+
+                        _unitOfWork.ParkingSlotRepository.Update(parkingSlot);
+                    }
+                }
+
+                existingVehicle.LicenseNumber = vehicle.LicenseNumber;
+                existingVehicle.VehicleType = vehicle.VehicleType;
+                existingVehicle.OwnerName = vehicle.OwnerName;
+                existingVehicle.OwnerPhone = vehicle.OwnerPhone;
+                existingVehicle.OwnerAddress = vehicle.OwnerAddress;
+                existingVehicle.Status = vehicle.Status;
+                existingVehicle.EntryTime = vehicle.EntryTime;
+                existingVehicle.ExitTime = vehicle.ExitTime;
+                existingVehicle.ParkingCharge = vehicle.ParkingCharge;
+
+                _unitOfWork.VehicleRepository.Update(existingVehicle);
+                await _unitOfWork.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        // Delete a vehicle
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> GetDashboardInfo( [FromQuery] DateTime? startDate,
+    [FromQuery] DateTime? endDate,
+    [FromQuery] string interval = "daily")
+        {
+            var filterStartDate = startDate ?? DateTime.Today;
+            var filterEndDate = startDate ?? DateTime.Today.AddDays(1);
+            var dashboard = await _unitOfWork.VehicleRepository.GetDashboardData(filterStartDate, filterEndDate, interval);
+            return Ok(dashboard);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
@@ -122,7 +184,6 @@ namespace api.Controllers
             return Ok(vehicles);
         }
 
-        // Calculate parking charge for a specific vehicle
         [HttpGet("charge/{vehicleId}")]
         public async Task<ActionResult<decimal>> GetParkingCharge(int vehicleId)
         {

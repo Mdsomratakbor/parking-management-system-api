@@ -1,4 +1,5 @@
-﻿using domain.entities;
+﻿using domain.dto;
+using domain.entities;
 using infrastructure.contracts;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +26,91 @@ namespace infrastructure.repositories
             return await _context.Vehicles.FindAsync(vehicleId);
         }
 
+        public async Task<List<PieChartData>> GetPieChartDataAsync()
+        {
+            return await _context.Vehicles
+                .Where(v => v.Status == "in") 
+                .GroupBy(v => v.VehicleType)
+                .Select(g => new PieChartData
+                {
+                    VehicleType = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<LineChartData>> GetLineChartDataAsync(DateTime startDate, DateTime endDate, string interval)
+        {
+            var vehicles = _context.Vehicles
+                .Where(v => v.EntryTime.Date >= startDate.Date && v.EntryTime.Date <= endDate.Date);
+
+            IQueryable<LineChartData> groupedQuery;
+
+            switch (interval.ToLower())
+            {
+                case "daily":
+                    groupedQuery = vehicles
+                        .GroupBy(v => v.EntryTime.Date)
+                        .Select(g => new LineChartData
+                        {
+                            TimePeriod = g.Key.ToString("yyyy-MM-dd"),
+                            Count = g.Count()
+                        });
+                    break;
+
+                case "weekly":
+                    groupedQuery = vehicles
+                        .GroupBy(v => new
+                        {
+                            Year = EF.Functions.DateDiffYear(new DateTime(1900, 1, 1), v.EntryTime),
+                            Week = (v.EntryTime.DayOfYear - 1) / 7 + 1
+                        })
+                        .Select(g => new LineChartData
+                        {
+                            TimePeriod = $"{g.Key.Year}-W{g.Key.Week}",
+                            Count = g.Count()
+                        });
+                    break;
+
+                case "monthly":
+                    groupedQuery = vehicles
+                        .GroupBy(v => new
+                        {
+                            v.EntryTime.Year,
+                            v.EntryTime.Month
+                        })
+                        .Select(g => new LineChartData
+                        {
+                            TimePeriod = $"{g.Key.Year}-{g.Key.Month:D2}",
+                            Count = g.Count()
+                        });
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid interval. Use 'daily', 'weekly', or 'monthly'.");
+            }
+
+            return await groupedQuery.ToListAsync();
+        }
 
 
+        public async Task<(IEnumerable<Vehicle> Vehicles, int TotalRecords)> GetPagedVehiclesAsync(int pageNumber, int pageSize)
+        {
+            if (pageNumber <= 0 || pageSize <= 0)
+            {
+                throw new ArgumentException("Page number and page size must be greater than zero.");
+            }
+
+            var query = _context.Vehicles.AsQueryable();
+            var totalRecords = await query.CountAsync();
+
+            var vehicles = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (vehicles, totalRecords);
+        }
 
 
         public async Task<IEnumerable<Vehicle>> GetVehiclesByStatusAsync(string status)
@@ -34,48 +118,41 @@ namespace infrastructure.repositories
             return await _context.Vehicles.Where(v => v.Status.ToString() == status).ToListAsync();
         }
 
-        //public async Task<decimal> CalculateParkingChargeAsync(int vehicleId)
-        //{
-        //    // Fetch the vehicle and its related parking record
-        //    var vehicle = await _context.Vehicles
-        //        .Include(v => v.ParkingRecords)
-        //        .FirstOrDefaultAsync(v => v.VehicleId == vehicleId);
+        public async Task<DashboardDto> GetDashboardData(DateTime startDate, DateTime endDate, string interval = "daily")
+        {
 
-        //    if (vehicle == null || vehicle.ParkingRecords == null || vehicle.ParkingRecords.Count == 0)
-        //    {
-        //        throw new Exception("Vehicle or parking record not found.");
-        //    }
+            var vehiclesQuery = _context.Vehicles.AsQueryable();
 
-        //    // Get the most recent parking record (for simplicity, assuming it's the exit record)
-        //    var latestParkingRecord = vehicle.ParkingRecords.OrderByDescending(pr => pr.EntryTime).FirstOrDefault();
+            vehiclesQuery = vehiclesQuery.Where(v => v.EntryTime.Date == startDate.Date);
 
-        //    if (latestParkingRecord == null)
-        //    {
-        //        throw new Exception("Parking record not found.");
-        //    }
+            var totalCarsParked = await vehiclesQuery.CountAsync();
 
-        //    // Calculate the duration in hours (for simplicity, assuming exit time is provided)
-        //    var entryTime = latestParkingRecord.EntryTime;
-        //    var exitTime = latestParkingRecord.ExitTime ?? DateTime.Now;  // Assuming exit time is nullable
-        //    var durationInHours = (exitTime - entryTime).TotalHours;
+            var totalParkingSlots = await _context.ParkingSlots.CountAsync();
+            var totalOccupiedSlots = await vehiclesQuery.CountAsync(v => v.Status == "in");
+            var totalEmptySlots = totalParkingSlots - totalOccupiedSlots;
 
-        //    // Define rates based on vehicle type using enum
-        //    decimal ratePerHour = vehicle.VehicleType switch
-        //    {
-        //        VehicleType.Car => 10,
-        //        VehicleType.Truck => 15,
-        //        VehicleType.Bike => 5,
-        //        VehicleType.MicroBus => 12,
-        //        _ => throw new Exception("Unknown vehicle type.")
-        //    };
+            var vehicleTypeInfo = await vehiclesQuery
+                .GroupBy(v => v.VehicleType)
+                .Select(g => new { VehicleType = g.Key, Count = g.Count() })
+                .ToListAsync();
 
-        //    // Calculate the parking charge based on the rate and duration
-        //    decimal parkingCharge = (decimal)durationInHours * ratePerHour;
+            var vehiclesParkedMoreThanTwoHours = await vehiclesQuery
+                .Where(v => v.Status == "in" && v.EntryTime.AddHours(2) < DateTime.Now)
+                .CountAsync();
 
-        //    // You can also apply rounding or additional rules if needed, e.g., rounding to two decimal places
-        //    parkingCharge = Math.Round(parkingCharge, 2);
-
-        //    return parkingCharge;
-        //}
+            return new DashboardDto
+            {
+                TotalCarsParked = totalCarsParked,
+                TotalEmptySlots = totalEmptySlots,
+                VehicleTypeInfo = vehicleTypeInfo.Select(vt => new VehicleTypeInfoDto
+                {
+                    VehicleType = vt.VehicleType,
+                    Count = vt.Count
+                }).ToList(),
+                VehiclesParkedMoreThanTwoHours = vehiclesParkedMoreThanTwoHours,
+                PieChart = await GetPieChartDataAsync(),
+                LineChart = await GetLineChartDataAsync(startDate, endDate, interval)
+            };
+        }
     }
 }

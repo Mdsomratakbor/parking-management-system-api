@@ -72,6 +72,21 @@ namespace infrastructure
         #endregion
 
 
+        #region ParkingSlotRepository
+        private IParkingSlotRepository parkingSlotRepository;
+
+        public IParkingSlotRepository ParkingSlotRepository
+        {
+            get
+            {
+                if (parkingSlotRepository == null)
+                    parkingSlotRepository = new ParkingSlotRepository(context);
+
+                return parkingSlotRepository;
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Disposes of the resources used by the unit of work.
         /// </summary>

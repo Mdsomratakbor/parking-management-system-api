@@ -14,7 +14,7 @@ namespace infrastructure
         {
         }
         public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<ParkingSummary> ParkingSummaries { get; set; }
+        public DbSet<ParkingSlot> ParkingSlots { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -22,6 +22,21 @@ namespace infrastructure
                 .HasIndex(v => v.LicenseNumber)
                 .IsUnique();
 
+
+            var parkingSlots = new List<ParkingSlot>();
+            for (int i = 1; i <= 200; i++)
+            {
+                parkingSlots.Add(new ParkingSlot
+                {
+                    ParkingSlotId = i,
+                    SlotNumber = $"Slot-{i:D3}",
+                    IsOccupied = false,
+                    OccupiedFrom = null,
+                    OccupiedUntil = null,
+                });
+            }
+
+            modelBuilder.Entity<ParkingSlot>().HasData(parkingSlots);
         }
     }
 }

@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using utilities.constants;
 
-namespace domain.entities
+namespace domain.dto
 {
-    public class Vehicle:BaseEntity
+    public class VehicleUpdateDto
     {
         [Key]
         public int VehicleId { get; set; }
@@ -42,8 +41,5 @@ namespace domain.entities
 
         [Column(TypeName = "decimal(10, 2)")]
         public decimal ParkingCharge { get; set; }
-
-        public int? ParkingSlotId { get; set; }  
-        public ParkingSlot ParkingSlot { get; set; }
     }
 }
