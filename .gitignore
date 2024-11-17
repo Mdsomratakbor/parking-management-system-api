@@ -1,1 +1,9 @@
 /.vs
+/api/obj
+/api/bin
+/domain/obj
+/domain/bin
+/infrastructure/obj
+/infrastructure/bin
+/utilities/obj
+/utilities/bin
