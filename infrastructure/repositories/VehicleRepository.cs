@@ -16,7 +16,7 @@ namespace infrastructure.repositories
     {
         private readonly DataContext _context;
 
-        public VehicleRepository(DataContext context):base(context)
+        public VehicleRepository(DataContext context) : base(context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace infrastructure.repositories
         public async Task<List<PieChartData>> GetPieChartDataAsync()
         {
             return await _context.Vehicles
-                .Where(v => v.Status == "in") 
+                .Where(v => v.Status == "in")
                 .GroupBy(v => v.VehicleType)
                 .Select(g => new PieChartData
                 {
@@ -121,15 +121,14 @@ namespace infrastructure.repositories
         public async Task<DashboardDto> GetDashboardData(DateTime startDate, DateTime endDate, string interval = "daily")
         {
 
+
             var vehiclesQuery = _context.Vehicles.AsQueryable();
+            vehiclesQuery = vehiclesQuery.Where(v => v.EntryTime.Date >= startDate.Date && v.EntryTime.Date <= endDate);
 
-            vehiclesQuery = vehiclesQuery.Where(v => v.EntryTime.Date == startDate.Date);
+            var totalCarsParked = await vehiclesQuery.CountAsync(x => x.Status == "in");
 
-            var totalCarsParked = await vehiclesQuery.CountAsync();
-
-            var totalParkingSlots = await _context.ParkingSlots.CountAsync();
-            var totalOccupiedSlots = await vehiclesQuery.CountAsync(v => v.Status == "in");
-            var totalEmptySlots = totalParkingSlots - totalOccupiedSlots;
+            var totalParkingSlots = await _context.ParkingSlots.CountAsync(x => x.IsOccupied == false);
+            var totalEmptySlots = totalParkingSlots - totalCarsParked;
 
             var vehicleTypeInfo = await vehiclesQuery
                 .GroupBy(v => v.VehicleType)
@@ -154,5 +153,6 @@ namespace infrastructure.repositories
                 LineChart = await GetLineChartDataAsync(startDate, endDate, interval)
             };
         }
+
     }
 }

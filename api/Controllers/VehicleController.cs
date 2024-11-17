@@ -152,9 +152,7 @@ namespace api.Controllers
         }
 
         [HttpGet("dashboard")]
-        public async Task<IActionResult> GetDashboardInfo( [FromQuery] DateTime? startDate,
-    [FromQuery] DateTime? endDate,
-    [FromQuery] string interval = "daily")
+        public async Task<IActionResult> GetDashboardInfo( [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] string interval = "daily")
         {
             var filterStartDate = startDate ?? DateTime.Today;
             var filterEndDate = startDate ?? DateTime.Today.AddDays(1);
@@ -176,7 +174,6 @@ namespace api.Controllers
             return NoContent();
         }
 
-        // Get vehicles by their status (in/out)
         [HttpGet("status/{status}")]
         public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehiclesByStatus(string status)
         {
