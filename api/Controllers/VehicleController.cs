@@ -52,54 +52,7 @@ namespace api.Controllers
             return Ok(vehicle);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Vehicle>> AddVehicle([FromBody] VehicleDto vehicleDto)
-        //{
-        //    if (vehicleDto == null)
-        //    {
-        //        return BadRequest("Vehicle data is null");
-        //    }
-
-        //    var vehicle = new Vehicle
-        //    {
-        //        LicenseNumber = vehicleDto.LicenseNumber,
-        //        VehicleType = vehicleDto.VehicleType,
-        //        OwnerName = vehicleDto.OwnerName,
-        //        OwnerPhone = vehicleDto.OwnerPhone,
-        //        OwnerAddress = vehicleDto.OwnerAddress,
-        //        Status = vehicleDto.Status,
-        //        EntryTime = vehicleDto.EntryTime,
-        //        ParkingCharge = vehicleDto.ParkingCharge,
-        //        CreatedAt = DateTime.Now
-        //    };
-
-        //    try
-        //    {
-        //        if (vehicle.Status == "in")
-        //        {
-        //            var availableSlot = await _unitOfWork.ParkingSlotRepository
-        //                .FirstOrDefaultAsync(slot => slot.IsOccupied == false);
-
-        //            if (availableSlot != null)
-        //            {
-        //                vehicle.ParkingSlotId = availableSlot.ParkingSlotId;
-        //                availableSlot.IsOccupied = true;
-        //                availableSlot.OccupiedFrom = DateTime.Now;
-
-        //                _unitOfWork.ParkingSlotRepository.Update(availableSlot);
-        //            }
-        //        }
-        //        _unitOfWork.VehicleRepository.Add(vehicle);
-
-        //        await _unitOfWork.SaveChangesAsync();
-
-        //        return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.VehicleId }, vehicle);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "An error occurred while processing your request.");
-        //    }
-        //}
+       
 
 
 
@@ -165,56 +118,7 @@ namespace api.Controllers
 
 
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleUpdateDto vehicle)
-        //{
-        //    if (id != vehicle.VehicleId)
-        //    {
-        //        return BadRequest("Vehicle ID mismatch");
-        //    }
-
-        //    try
-        //    {
-        //        var existingVehicle = await _unitOfWork.VehicleRepository.GetByIdAsync(id);
-        //        if (existingVehicle == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        if (existingVehicle.Status == "in" && vehicle.Status == "out")
-        //        {
-        //            var parkingSlot = await _unitOfWork.ParkingSlotRepository
-        //                .GetByIdAsync((int)existingVehicle.ParkingSlotId);
-
-        //            if (parkingSlot != null)
-        //            {
-        //                parkingSlot.IsOccupied = false;
-        //                parkingSlot.OccupiedUntil = DateTime.Now;
-
-        //                _unitOfWork.ParkingSlotRepository.Update(parkingSlot);
-        //            }
-        //        }
-
-        //        existingVehicle.LicenseNumber = vehicle.LicenseNumber;
-        //        existingVehicle.VehicleType = vehicle.VehicleType;
-        //        existingVehicle.OwnerName = vehicle.OwnerName;
-        //        existingVehicle.OwnerPhone = vehicle.OwnerPhone;
-        //        existingVehicle.OwnerAddress = vehicle.OwnerAddress;
-        //        existingVehicle.Status = vehicle.Status;
-        //        existingVehicle.EntryTime = vehicle.EntryTime;
-        //        existingVehicle.ExitTime = vehicle.ExitTime;
-        //        existingVehicle.ParkingCharge = vehicle.ParkingCharge;
-
-        //        _unitOfWork.VehicleRepository.Update(existingVehicle);
-        //        await _unitOfWork.SaveChangesAsync();
-
-        //        return NoContent();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "An error occurred while processing your request.");
-        //    }
-        //}
-
+        
 
 
         [HttpPut("{id}")]
