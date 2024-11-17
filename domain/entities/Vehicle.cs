@@ -44,8 +44,6 @@ namespace domain.entities
         public decimal ParkingCharge { get; set; }
 
         public int? ParkingSlotId { get; set; }  
-        public ParkingSlot ParkingSlot { get; set; }
-
-        public ICollection<VehicleHistory> History { get; set; }    
+        public ParkingSlot ParkingSlot { get; set; } 
     }
 }

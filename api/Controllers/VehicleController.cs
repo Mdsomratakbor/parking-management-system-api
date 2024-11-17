@@ -141,6 +141,7 @@ namespace api.Controllers
                     }
                 }
                 _unitOfWork.VehicleRepository.Add(vehicle);
+                await _unitOfWork.SaveChangesAsync();
                 var history = new VehicleHistory
                 {
                     VehicleId = vehicle.VehicleId,
@@ -158,7 +159,7 @@ namespace api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, "An error occurred while processing your request."+ex.Message);
             }
         }
 
@@ -275,7 +276,7 @@ namespace api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, "An error occurred while processing your request." + ex.Message);
             }
         }
 
@@ -284,7 +285,7 @@ namespace api.Controllers
         public async Task<IActionResult> GetDashboardInfo( [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] string interval = "daily")
         {
             var filterStartDate = startDate ?? DateTime.Today;
-            var filterEndDate = startDate ?? DateTime.Today.AddDays(1);
+            var filterEndDate = endDate ?? DateTime.Today;
             var dashboard = await _unitOfWork.VehicleRepository.GetDashboardData(filterStartDate, filterEndDate, interval);
             return Ok(dashboard);
         }
