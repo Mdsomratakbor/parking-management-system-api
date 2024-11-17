@@ -15,6 +15,8 @@ namespace infrastructure
         }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<ParkingSlot> ParkingSlots { get; set; }
+
+        public DbSet<VehicleHistory> VehicleHistories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

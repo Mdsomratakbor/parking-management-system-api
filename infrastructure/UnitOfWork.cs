@@ -71,6 +71,21 @@ namespace infrastructure
         }
         #endregion
 
+        #region VehicleHistoryRepository
+        private IVehicleHistoryRepository vehicleHistoryRepository;
+
+        public IVehicleHistoryRepository VehicleHistoryRepository
+        {
+            get
+            {
+                if (vehicleHistoryRepository == null)
+                    vehicleHistoryRepository = new VehicleHistoryRepository(context);
+
+                return vehicleHistoryRepository;
+            }
+        }
+        #endregion
+
 
         #region ParkingSlotRepository
         private IParkingSlotRepository parkingSlotRepository;

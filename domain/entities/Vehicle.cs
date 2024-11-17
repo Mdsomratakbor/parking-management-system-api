@@ -33,7 +33,7 @@ namespace domain.entities
         public string OwnerAddress { get; set; }
 
         [Required]
-        public string Status { get; set; } // "in" or "out"
+        public string Status { get; set; }
 
         [Required]
         public DateTime EntryTime { get; set; }
@@ -45,5 +45,7 @@ namespace domain.entities
 
         public int? ParkingSlotId { get; set; }  
         public ParkingSlot ParkingSlot { get; set; }
+
+        public ICollection<VehicleHistory> History { get; set; }    
     }
 }

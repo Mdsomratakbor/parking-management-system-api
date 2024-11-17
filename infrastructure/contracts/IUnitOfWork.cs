@@ -27,6 +27,7 @@ namespace infrastructure.contracts
         Task<IDbContextTransaction> BeginTransactionAsync();
 
         IVehicleRepository VehicleRepository { get; }
+        IVehicleHistoryRepository VehicleHistoryRepository { get; }
         IParkingSlotRepository ParkingSlotRepository { get; }
     }
 }
