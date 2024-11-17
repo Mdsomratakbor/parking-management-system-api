@@ -128,7 +128,7 @@ namespace infrastructure.repositories
             var totalCarsParked = await vehiclesQuery.CountAsync(x => x.Status == "in");
 
             var totalParkingSlots = await _context.ParkingSlots.CountAsync(x => x.IsOccupied == false);
-            var totalEmptySlots = totalParkingSlots - totalCarsParked;
+            var totalEmptySlots = totalParkingSlots;
 
             var vehicleTypeInfo = await vehiclesQuery
                 .GroupBy(v => v.VehicleType)
@@ -136,7 +136,7 @@ namespace infrastructure.repositories
                 .ToListAsync();
 
             var vehiclesParkedMoreThanTwoHours = await vehiclesQuery
-                .Where(v => v.Status == "in" && v.EntryTime.AddHours(2) < DateTime.Now)
+                .Where(v => v.Status == "in" && v.EntryTime.AddHours(2) > DateTime.Now)
                 .CountAsync();
 
             return new DashboardDto
