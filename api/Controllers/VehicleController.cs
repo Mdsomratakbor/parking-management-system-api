@@ -1,8 +1,11 @@
-﻿using domain.dto;
+﻿using api.Hubs;
+using domain.dto;
 using domain.entities;
 using infrastructure.contracts;
+using infrastructure.repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
@@ -12,10 +15,26 @@ namespace api.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public VehicleController(IUnitOfWork unitOfWork)
+        private readonly IHubContext<ParkingHub> _hubContext;
+        public VehicleController(IHubContext<ParkingHub> hubContext, IUnitOfWork unitOfWork)
         {
+            _hubContext = hubContext;
             _unitOfWork = unitOfWork;
+        }
+        [HttpPost("notify-parked-over-two-hours")]
+        public async Task<IActionResult> NotifyVehiclesParkedOverTwoHours()
+        {
+            try
+            {
+                var vehicles = await _unitOfWork.VehicleRepository.GetVehiclesParkedMoreThanTwoHoursAsync();
+                await _hubContext.Clients.All.SendAsync("ReceiveVehiclesParkedOverTwoHours", vehicles);
+
+                return Ok(new { message = "Notification sent", vehicles });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
         }
 
         [HttpGet]

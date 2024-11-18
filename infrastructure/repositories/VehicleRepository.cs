@@ -112,7 +112,13 @@ namespace infrastructure.repositories
             return (vehicles, totalRecords);
         }
 
-
+        public async Task<List<Vehicle>> GetVehiclesParkedMoreThanTwoHoursAsync()
+        {
+            var twoHoursAgo = DateTime.Now.AddHours(-2);
+            return await _context.Vehicles
+                .Where(v => v.Status == "in" && v.EntryTime <= twoHoursAgo)
+                .ToListAsync();
+        }
         public async Task<IEnumerable<Vehicle>> GetVehiclesByStatusAsync(string status)
         {
             return await _context.Vehicles.Where(v => v.Status.ToString() == status).ToListAsync();
