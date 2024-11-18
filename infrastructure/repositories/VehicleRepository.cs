@@ -142,7 +142,7 @@ namespace infrastructure.repositories
                 .ToListAsync();
 
             var vehiclesParkedMoreThanTwoHours = await vehiclesQuery
-                .Where(v => v.Status == "in" && v.EntryTime.AddHours(2) > DateTime.Now)
+                .Where(v => v.Status == "in" && v.EntryTime.AddHours(2) < DateTime.Now)
                 .CountAsync();
 
             return new DashboardDto
