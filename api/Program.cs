@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") 
+        policy.WithOrigins("http://localhost:4200", "https://parking-management-system-2133212.netlify.app") 
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
